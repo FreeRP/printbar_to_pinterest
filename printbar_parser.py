@@ -9,8 +9,8 @@ from tool import load_json
 class PrintbarParser:
 
     def __init__(self):
-        self.__clothes_data = dict()
-        self.__clothes_cntr = 0
+        self.__product_data = dict()
+        self.__product_cntr = 0
         self.__proxies = {'http':"162.144.50.155:3838"}
 
     @staticmethod
@@ -89,37 +89,37 @@ class PrintbarParser:
 
     def __get_image_path(self, html_soup):
         url = self.__get_img_attribute(html_soup, 'data-full')
-        img_name = f"{self.__clothes_data['title'].replace(' ','')}{self.__clothes_cntr}.jpg"
+        img_name = f"{self.__product_data['title'].replace(' ','')}{self.__product_cntr}.jpg"
         file_path = f'''database/imgs/
-            {self.__clothes_data['title'].replace(' ','')}{self.__clothes_cntr}.jpg'''
-        self.__clothes_cntr += 1
+            {self.__product_data['title'].replace(' ','')}{self.__product_cntr}.jpg'''
+        self.__product_cntr += 1
         self.__download_image(url, file_path)
         return img_name
 
-    def get_clothes_links(self, url):
+    def get_product_links(self, url):
         return self.__get_catalog_urls(
                self.__get_catalog_html(
                self.get_html(url)))
 
     def get_content_data(self, url)->dict:
         html_soup = self.__get_useful_data(BeautifulSoup(self.get_html(url), 'lxml'))
-        self.__clothes_data['title'] = self.__get_title(html_soup)
-        self.__clothes_data['price'] = self.__get_price(html_soup)
-        self.__clothes_data['img_name'] = self.__get_image_path(html_soup)
-        print(f'loaded: {self.__clothes_data["title"]}')
-        return self.__clothes_data
+        self.__product_data['title'] = self.__get_title(html_soup)
+        self.__product_data['price'] = self.__get_price(html_soup)
+        self.__product_data['img_name'] = self.__get_image_path(html_soup)
+        print(f'loaded: {self.__product_data["title"]}')
+        return self.__product_data
 
-def write_database(path, url):
-    parser = PrintbarParser()
-    with open(path, 'a', encoding='utf8') as db:
-        writer = csv.DictWriter(db, fieldnames=['title', 'price', 'img_name'])
-        content_links = parser.get_clothes_links(url)
-        if len(content_links):
-            for index in range(10):
-                sleep(5)
-                writer.writerow(parser.get_content_data(content_links[index]))
-        else:
-            print('ERROR: content_links is empty!')
+    def write_database(path, url):
+        parser = PrintbarParser()
+        with open(path, 'a', encoding='utf8') as db:
+            writer = csv.DictWriter(db, fieldnames=['title', 'price', 'img_name'])
+            content_links = parser.get_product_links(url)
+            if len(content_links):
+                for index in range(10):
+                    sleep(5)
+                    writer.writerow(parser.get_content_data(content_links[index]))
+            else:
+                print('ERROR: content_links is empty!')
 
 def main():
     catalogs = [('database/russia.csv', 'https://printbar.ru/tovari/rossiya/'),
