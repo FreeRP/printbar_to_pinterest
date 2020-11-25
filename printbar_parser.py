@@ -104,8 +104,8 @@ class PrintbarParser:
             html_soup = self.__get_useful_data(BeautifulSoup(self.get_html(product_url), 'lxml'))
             title = self.__get_title(html_soup)
             price = self.__get_price(html_soup)
-            img_name = self.__get_image_path(html_soup)
-            yield (title, price, img_name, product_url)
+            image_path = self.__get_image_path(html_soup)
+            yield (title, price, image_path, product_url)
 
     @staticmethod
     def write_to_database(path, url):
