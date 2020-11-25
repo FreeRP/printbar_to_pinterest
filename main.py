@@ -1,3 +1,6 @@
+from time import sleep
+import requests
+
 from pin_uploader import PinUploader
 from printbar_parser import PrintbarParser
 from utils import load_json
