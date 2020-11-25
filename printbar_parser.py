@@ -85,11 +85,10 @@ class PrintbarParser:
                      replace(' ','').replace('₽',' ₽').replace('ру',' ₽')
         return price_text[:price_text.find('или')]
 
-    def __get_image_path(self, html_soup):
+    def __get_image_path(self, image_name, html_soup):
         url = self.__get_img_attribute(html_soup, 'data-full')
-        img_name = f"{self.__product_data['title'].replace(' ','')}{self.__product_cntr}.jpg"
-        file_path = f'''database/imgs/
-            {self.__product_data['title'].replace(' ','')}{self.__product_cntr}.jpg'''
+        img_name = f"{image_name.replace(' ','')}{self.__product_cntr}.jpg"
+        file_path = f'imgs/{image_name.replace(' ','')}{self.__product_cntr}.jpg'
         self.__product_cntr += 1
         self.__download_image(url, file_path)
         return img_name
@@ -104,7 +103,7 @@ class PrintbarParser:
             html_soup = self.__get_useful_data(BeautifulSoup(self.get_html(product_url), 'lxml'))
             title = self.__get_title(html_soup)
             price = self.__get_price(html_soup)
-            image_path = self.__get_image_path(html_soup)
+            image_path = self.__get_image_path(title, html_soup)
             yield (title, price, image_path, product_url)
 
     @staticmethod
