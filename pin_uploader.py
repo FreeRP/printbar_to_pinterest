@@ -42,19 +42,14 @@ class PinUploader:
             return None
         return response.json()['resource_response']['data']['id']
 
-    def create_pin(self, board_id, name, price, image_path, printbar_url):
+    def create_pin(self, board_id, title, price, image_path, printbar_url):
         description = '''Принт выдерживает неограниченное количество стирок.
                          Выберите тип ткани и вид печати.
                          Продукция будет готова через 48 часов.'''
+        hashtag = title.replace(' ', ' #')
         self.__pinterest.upload_pin(board_id=board_id,
-                            image_file=row['image_path'],
+                            image_file=image_path,
                             description= f"Цена: {price}. {description} {hashtag}",
-                            title=row['title'],
-                            link=row['url'])
+                            title=title,
+                            link=printbar_url)
 
-if __name__ == "__main__":
-    user_info = load_json('config/login.json')
-    pinterest = PinUploader(user_info)
-    pinterest.login()
-    pinterest.create_pins(load_json('config/board_data.json'))
-    pinterest.logout()
