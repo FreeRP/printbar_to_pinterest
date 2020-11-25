@@ -1,4 +1,5 @@
 import csv
+import requests
 from time import sleep
 from py3pin.Pinterest import Pinterest
 
@@ -33,8 +34,12 @@ class PinUploader:
     def logout(self):
         self.__pinterest.logout()
 
-    def __get_board_id(self, boardname):
-        response = self.__pinterest.create_board(name=boardname)
+    def get_board_id(self, boardname):
+        response = None
+        try:
+            response = self.__pinterest.create_board(name=boardname)
+        except requests.exceptions.HTTPError as err:
+            return None
         return response.json()['resource_response']['data']['id']
 
     def create_pin(self, board_id, name, price, image_path, printbar_url):
