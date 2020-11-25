@@ -47,12 +47,6 @@ class PinUploader:
                             title=row['title'],
                             link=row['url'])
 
-    def create_pins(self, board_data):
-        for board_name, data in board_data.items():
-            board_id = self.__get_board_id(board_name)
-            self.__upload_pins_to_board(board_id, data['database'])
-            sleep(50)
-
 if __name__ == "__main__":
     user_info = load_json('config/login.json')
     pinterest = PinUploader(user_info)
