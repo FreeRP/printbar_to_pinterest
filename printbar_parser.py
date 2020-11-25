@@ -87,8 +87,7 @@ class PrintbarParser:
 
     def __get_image_path(self, image_name, html_soup):
         url = self.__get_img_attribute(html_soup, 'data-full')
-        img_name = f"{image_name.replace(' ','')}{self.__product_cntr}.jpg"
-        file_path = f'imgs/{image_name.replace(' ','')}{self.__product_cntr}.jpg'
+        file_path = f"imgs/{image_name.replace(' ','')}{self.__product_cntr}.jpg"
         self.__product_cntr += 1
         self.__download_image(url, file_path)
         return img_name
