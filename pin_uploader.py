@@ -3,7 +3,8 @@ import random
 from time import sleep
 from py3pin.Pinterest import Pinterest
 
-from tool import load_json
+from utils import load_json
+
 
 class PinUploader:
 
@@ -54,7 +55,7 @@ class PinUploader:
                                                 title=row['title'],
                                                 link=row['url'])
                     print(f'Uploaded: {row["title"]}')
-                    sleep(25)
+                    sleep(5)
 
 
     def create_pins(self, board_data):

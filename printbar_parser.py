@@ -1,9 +1,7 @@
 import csv
+from time import sleep
 import requests
 from bs4 import BeautifulSoup
-from time import sleep
-
-from tool import load_json
 
 
 class PrintbarParser:
@@ -78,8 +76,8 @@ class PrintbarParser:
     def __download_image(url, file_path):
         response = requests.get(url, stream=True)
         if response.ok:
-            with open(file_path, 'wb') as f:
-                f.write(response.content)
+            with open(file_path, 'wb') as file:
+                file.write(response.content)
 
     @staticmethod
     def __get_price(html_soup):
@@ -101,24 +99,23 @@ class PrintbarParser:
                self.__get_catalog_html(
                self.get_html(url)))
 
-    def get_product_data(self, url)->dict:
+    def get_products_data(self, url):
         for product_url in self.get_product_links(url):
-            html_soup = self.__get_useful_data(BeautifulSoup(self.get_html(url), 'lxml'))
-            self.__product_data['title'] = self.__get_title(html_soup)
-            self.__product_data['price'] = self.__get_price(html_soup)
-            self.__product_data['img_name'] = self.__get_image_path(html_soup)
-            print(f'loaded: {self.__product_data["title"]}')
-            return self.__product_data
+            html_soup = self.__get_useful_data(BeautifulSoup(self.get_html(product_url), 'lxml'))
+            title = self.__get_title(html_soup)
+            price = self.__get_price(html_soup)
+            img_name = self.__get_image_path(html_soup)
+            yield (title, price, img_name, product_url)
 
-    def write_database(self, path, url):
+    @staticmethod
+    def write_to_database(path, url):
         parser = PrintbarParser()
-        with open(path, 'a', encoding='utf8') as db:
-            writer = csv.DictWriter(db, fieldnames=['title', 'price', 'img_name'])
+        with open(path, 'a', encoding='utf8') as database:
+            writer = csv.DictWriter(database, fieldnames=['title', 'price', 'img_name'])
             content_links = parser.get_product_links(url)
-            if len(content_links):
+            if len(content_links) > 0:
                 for index in range(10):
                     sleep(5)
                     writer.writerow(parser.get_content_data(content_links[index]))
             else:
                 print('ERROR: content_links is empty!')
-
