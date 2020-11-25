@@ -1,6 +1,6 @@
-from .pin_uploader import PinUploader
-from .printbar_parser import PrintbarParser
-from .utils import load_json
+from pin_uploader import PinUploader
+from printbar_parser import PrintbarParser
+from utils import load_json
 
 
 def main():
