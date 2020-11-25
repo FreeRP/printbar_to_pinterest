@@ -1,5 +1,4 @@
 import csv
-import random
 from time import sleep
 from py3pin.Pinterest import Pinterest
 
@@ -38,25 +37,15 @@ class PinUploader:
         response = self.__pinterest.create_board(name=boardname)
         return response.json()['resource_response']['data']['id']
 
-    def __upload_pins_to_board(self, board_id, database_path):
+    def create_pin(self, board_id, name, price, image_path, printbar_url):
         description = '''Принт выдерживает неограниченное количество стирок.
                          Выберите тип ткани и вид печати.
                          Продукция будет готова через 48 часов.'''
-        with open(database_path, encoding='utf-8') as db:
-            reader = csv.DictReader(db, fieldnames=['url','title', 'price', 'image_path'])
-            for row in reader:
-                if len(row['url']) > 0:
-                    hashtag = '#' + row['title'].replace(' ', ' #')
-                    price = row['price'].strip()
-                    price = price if price.find('₽') > 0 else price + ' ₽'
-                    self.__pinterest.upload_pin(board_id=board_id,
-                                                image_file=row['image_path'],
-                                                description= f"Цена: {price}. {description} {hashtag}",
-                                                title=row['title'],
-                                                link=row['url'])
-                    print(f'Uploaded: {row["title"]}')
-                    sleep(5)
-
+        self.__pinterest.upload_pin(board_id=board_id,
+                            image_file=row['image_path'],
+                            description= f"Цена: {price}. {description} {hashtag}",
+                            title=row['title'],
+                            link=row['url'])
 
     def create_pins(self, board_data):
         for board_name, data in board_data.items():
