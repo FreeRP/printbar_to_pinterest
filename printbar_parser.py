@@ -101,15 +101,16 @@ class PrintbarParser:
                self.__get_catalog_html(
                self.get_html(url)))
 
-    def get_content_data(self, url)->dict:
-        html_soup = self.__get_useful_data(BeautifulSoup(self.get_html(url), 'lxml'))
-        self.__product_data['title'] = self.__get_title(html_soup)
-        self.__product_data['price'] = self.__get_price(html_soup)
-        self.__product_data['img_name'] = self.__get_image_path(html_soup)
-        print(f'loaded: {self.__product_data["title"]}')
-        return self.__product_data
+    def get_product_data(self, url)->dict:
+        for product_url in self.get_product_links(url):
+            html_soup = self.__get_useful_data(BeautifulSoup(self.get_html(url), 'lxml'))
+            self.__product_data['title'] = self.__get_title(html_soup)
+            self.__product_data['price'] = self.__get_price(html_soup)
+            self.__product_data['img_name'] = self.__get_image_path(html_soup)
+            print(f'loaded: {self.__product_data["title"]}')
+            return self.__product_data
 
-    def write_database(path, url):
+    def write_database(self, path, url):
         parser = PrintbarParser()
         with open(path, 'a', encoding='utf8') as db:
             writer = csv.DictWriter(db, fieldnames=['title', 'price', 'img_name'])
@@ -121,12 +122,3 @@ class PrintbarParser:
             else:
                 print('ERROR: content_links is empty!')
 
-def main():
-    catalogs = [('database/russia.csv', 'https://printbar.ru/tovari/rossiya/'),
-    	        ('database/animals.csv', 'https://printbar.ru/tovari/ghivotnye'),
-    	        ('database/games.csv', 'https://printbar.ru/tovari/igry/')]
-    for catalog in catalogs:
-        write_database(*catalog)
-
-if __name__ == '__main__':
-    main()
