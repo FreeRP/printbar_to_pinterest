@@ -6,14 +6,13 @@ from utils import load_json
 def main():
     authorization_data = load_json('config/login.json')
     board_and_url = load_json('config/board_data.json')
-    #pin_uploader = PinUploader(authorization_data)
+    pin_uploader = PinUploader(authorization_data)
     printbar_parser = PrintbarParser()
     for pinterest_board_name, printbar_catalog_url in board_and_url.items():
-        #board_id = pin_uploader.get_board_id(pinterest_board_name)
+        board_id = pin_uploader.get_board_id(pinterest_board_name)
         products_data = printbar_parser.get_products_data(printbar_catalog_url['url'])
         for name, price, image_path, printbar_url in products_data:
-            print(name, price, image_path, printbar_url)
-            #pin_uploader.create_pin(board_id, name, price, image_path, printbar_url)
+            pin_uploader.create_pin(board_id, name, price, image_path, printbar_url)
 
 if __name__ == "__main__":
     main()
