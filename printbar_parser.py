@@ -90,7 +90,7 @@ class PrintbarParser:
         file_path = f"imgs/{image_name.replace(' ','')}{self.__product_cntr}.jpg"
         self.__product_cntr += 1
         self.__download_image(url, file_path)
-        return img_name
+        return file_path
 
     def get_product_links(self, url):
         return self.__get_catalog_urls(
