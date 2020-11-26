@@ -1,23 +1,22 @@
-from time import sleep
 import requests
 from bs4 import BeautifulSoup
 
 
 class PrintbarParser:
 
-    def __init__(self):
+    def __init__(self, logger):
         self.__product_data = dict()
         self.__product_cntr = 0
+        self.__logger = logger
 
-    @staticmethod
-    def get_html(url):
+    def get_html(self, url):
         user_agent = {'User-Agent':
         '''Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101 Firefox/80.0'''}
         response = requests.get(url, headers=user_agent)
+        self.__logger.info(f'received html from {url}')
         return response.text
 
-    @staticmethod
-    def __get_catalog_html(html):
+    def __get_catalog_html(self, html):
         try:
             return BeautifulSoup(html, 'lxml').\
                    find('main', class_='main__page').\
@@ -25,16 +24,16 @@ class PrintbarParser:
                    find('div', class_='pb__catalog--list-section').\
                    find_all('div', class_='pb__catalog--list-section')[-1]
         except AttributeError as err:
-            print(err)
+            self.__logger.exception(err)
             raise RuntimeError(err)
 
-    @staticmethod
-    def __get_catalog_urls(catalog_html):
+    def __get_catalog_urls(self, catalog_html):
         try:
             links = catalog_html.find_all('a')
         except AttributeError as err:
-            print(err)
+            self.__logger.exception(err)
             raise RuntimeError(err)
+        self.__logger.info('received catalog urls')
         return [link.get('href') for link in links]
 
     @staticmethod
@@ -49,13 +48,12 @@ class PrintbarParser:
                 break
         return img_url
 
-    @staticmethod
-    def __get_useful_data(html_soup):
+    def __get_useful_data(self, html_soup):
         try:
             return html_soup.find('main', class_='main__page').\
                              find('div', class_='pb__container')
         except AttributeError as err:
-            print(err)
+            self.__logger.exception(err)
             raise RuntimeError(err)
 
     @staticmethod
@@ -70,17 +68,17 @@ class PrintbarParser:
         return self.__get_img_attribute(html_soup, 'alt').\
                     replace('/','').replace('\\','').\
                     replace('?','').replace('*','')
-    @staticmethod
-    def __download_image(url, file_path):
+
+    def __download_image(self, url, file_path):
         response = requests.get(url, stream=True)
         if response.ok:
             with open(file_path, 'wb') as file:
                 file.write(response.content)
+                self.__logger.exception(f'{file_path} downloaded')
 
     @staticmethod
     def __get_price(html_soup):
-        price_text = html_soup.find('span', class_='js-end-price').text.
-
+        price_text = html_soup.find('span', class_='js-end-price').text.\
                      replace(' ','').replace('₽',' ₽').replace('ру',' ₽')
         return price_text[:price_text.find('или')]
 
@@ -102,5 +100,5 @@ class PrintbarParser:
             title = self.__get_title(html_soup)
             price = self.__get_price(html_soup)
             image_path = self.__get_image_path(title, html_soup)
+            self.__logger.info(f'from {url} recived {product_url}, {price}, {image_path}')
             yield (title, price, image_path, product_url)
-
