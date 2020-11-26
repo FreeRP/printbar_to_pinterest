@@ -9,7 +9,6 @@ class PrintbarParser:
     def __init__(self):
         self.__product_data = dict()
         self.__product_cntr = 0
-        self.__proxies = {'http':"162.144.50.155:3838"}
 
     @staticmethod
     def get_html(url):
