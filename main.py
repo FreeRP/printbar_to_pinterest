@@ -15,13 +15,13 @@ def main():
 
     printbar_parser = PrintbarParser()
     for pinterest_board_name, printbar_catalog_url in board_and_url.items():
-        board_id = pin_uploader.get_board_id(pinterest_board_name)
+        board_id = 608478668344090499 #pin_uploader.get_board_id(pinterest_board_name)
         products_data = printbar_parser.get_products_data(printbar_catalog_url['url'])
         for name, price, image_path, printbar_url in products_data:
-            pin_uploader.create_pin(board_id, name, price, image_path, printbar_url)
+            try:
+                pin_uploader.create_pin(board_id, name, price, image_path, printbar_url)
+            except requests.exceptions.HTTPError as err:
+                print(err)
 
 if __name__ == "__main__":
-    try:
         main()
-    except requests.exceptions.HTTPError as err:
-        print(err)
