@@ -1,4 +1,3 @@
-import csv
 from time import sleep
 import requests
 from bs4 import BeautifulSoup
@@ -80,7 +79,8 @@ class PrintbarParser:
 
     @staticmethod
     def __get_price(html_soup):
-        price_text = html_soup.find('span', class_='js-end-price').text.\
+        price_text = html_soup.find('span', class_='js-end-price').text.
+
                      replace(' ','').replace('₽',' ₽').replace('ру',' ₽')
         return price_text[:price_text.find('или')]
 
