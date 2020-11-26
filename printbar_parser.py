@@ -53,12 +53,11 @@ class PrintbarParser:
         except AttributeError as err:
             self.__logger.exception(err)
 
-    @staticmethod
-    def __get_description(html_soup):
+    def __get_description(self, html_soup):
         try:
             return html_soup.find('div', class_='pb__info--container-box pb__info--information')
         except AttributeError as err:
-            print(err)
+            self.__logger.exception(err)
 
     def __get_title(self, html_soup):
         return self.__get_img_attribute(html_soup, 'alt').\
