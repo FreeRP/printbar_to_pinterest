@@ -25,14 +25,12 @@ class PrintbarParser:
                    find_all('div', class_='pb__catalog--list-section')[-1]
         except AttributeError as err:
             self.__logger.exception(err)
-            raise RuntimeError(err)
 
     def __get_catalog_urls(self, catalog_html):
         try:
             links = catalog_html.find_all('a')
         except AttributeError as err:
             self.__logger.exception(err)
-            raise RuntimeError(err)
         self.__logger.info('received catalog urls')
         return [link.get('href') for link in links]
 
@@ -54,7 +52,6 @@ class PrintbarParser:
                              find('div', class_='pb__container')
         except AttributeError as err:
             self.__logger.exception(err)
-            raise RuntimeError(err)
 
     @staticmethod
     def __get_description(html_soup):
@@ -62,7 +59,6 @@ class PrintbarParser:
             return html_soup.find('div', class_='pb__info--container-box pb__info--information')
         except AttributeError as err:
             print(err)
-            raise RuntimeError(err)
 
     def __get_title(self, html_soup):
         return self.__get_img_attribute(html_soup, 'alt').\
