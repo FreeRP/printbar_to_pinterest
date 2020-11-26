@@ -1,4 +1,3 @@
-from time import sleep
 import requests
 from py3pin.Pinterest import Pinterest
 
@@ -15,11 +14,11 @@ class PinUploader:
                                      password=self.__cfg['password'],
                                      username=self.__cfg['username'],
                                      cred_root=self.__cfg['cred_root'])
-        self.__logger.info('logged in successfully')
+        self.__logger.info('login')
 
     def logout(self):
         self.__pinterest.logout()
-        self.__logger.info('log out')
+        self.__logger.info('logout')
 
     def get_board_id(self, boardname):
         response = None
