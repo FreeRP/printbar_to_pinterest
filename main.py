@@ -9,8 +9,10 @@ from utils import load_json
 def main():
     authorization_data = load_json('config/login.json')
     board_and_url = load_json('config/board_data.json')
+
     pin_uploader = PinUploader(authorization_data)
     pin_uploader.login()
+
     printbar_parser = PrintbarParser()
     for pinterest_board_name, printbar_catalog_url in board_and_url.items():
         board_id = pin_uploader.get_board_id(pinterest_board_name)
@@ -21,6 +23,5 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except requests.exceptions.HTTPError:
-        sleep(300)
-        main()
+    except requests.exceptions.HTTPError as err:
+        print(err)
