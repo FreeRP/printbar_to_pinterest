@@ -104,15 +104,3 @@ class PrintbarParser:
             image_path = self.__get_image_path(title, html_soup)
             yield (title, price, image_path, product_url)
 
-    @staticmethod
-    def write_to_database(path, url):
-        parser = PrintbarParser()
-        with open(path, 'a', encoding='utf8') as database:
-            writer = csv.DictWriter(database, fieldnames=['title', 'price', 'img_name'])
-            content_links = parser.get_product_links(url)
-            if len(content_links) > 0:
-                for index in range(10):
-                    sleep(5)
-                    writer.writerow(parser.get_content_data(content_links[index]))
-            else:
-                print('ERROR: content_links is empty!')
