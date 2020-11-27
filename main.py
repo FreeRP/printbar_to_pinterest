@@ -22,6 +22,7 @@ def main():
                 pin_uploader.create_pin(board_id, name, price, image_path, printbar_url)
             except requests.exceptions.HTTPError as err:
                 logger.exception(err)
+    pin_uploader.logout()
 
 if __name__ == "__main__":
-        main()
+    main()
