@@ -8,10 +8,10 @@ from utils import load_json, get_logger
 
 def main():
     logger = get_logger('file.log', 'p2p')
-    authorization_data = load_json('config/login.json')
+    cfg = load_json('config/login.json')
     board_and_url = load_json('config/board_data.json')
 
-    pin_uploader = PinUploader(authorization_data, logger)
+    pin_uploader = PinUploader(cfg['account'], logger)
     pin_uploader.login()
 
     printbar_parser = PrintbarParser(logger)
@@ -28,8 +28,7 @@ def main():
             except Exception as err:
                 logger.exception(f'unknow exception: {err}')
                 raise RuntimeError('Error')
-            sleep(10)
-
+            sleep(cfg['pin_creating_period'])
 
 if __name__ == "__main__":
     main()
