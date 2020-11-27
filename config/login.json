@@ -1,7 +1,10 @@
 {
-    "email":"",
-    "password":"",
-    "username":"",
-    "cred_root":".cookies",
-    "user_agent": ""
+    "pin_creating_period": 10,
+    "account":{
+        "email":"",
+        "password":"",
+        "username":"",
+        "cred_root":".cookies",
+        "user_agent": ""
+    }
 }
