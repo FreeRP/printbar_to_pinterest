@@ -15,7 +15,8 @@ class PinUploader:
                                      username=self.__cfg['username'],
                                      cred_root=self.__cfg['cred_root'],
                                      user_agent=self.__cfg['user_agent'])
-        self.__logger.info('login')
+        self.__pinterest.login()
+        self.__logger.info(f'login')
 
     def logout(self):
         self.__pinterest.logout()
@@ -30,7 +31,8 @@ class PinUploader:
             return None
 
         if response is not None:
-            self.__logger.exception('board {} created')
+            print('response status: ',response.ok)
+            self.__logger.info("board {boardname} created")
             return response.json()['resource_response']['data']['id']
         else:
             self.__logger.exception("can't create board '{boardname}'")
@@ -41,14 +43,19 @@ class PinUploader:
                          Выберите тип ткани и вид печати.
                          Продукция будет готова через 48 часов.'''
         hashtag = title.replace(' ', ' #')
-        self.__pinterest.pin(board_id=board_id,
-                            image_url=image_path,
-                            description= f"Цена: {price}. {description} {hashtag}",
-                            title=title,
-                            link=printbar_url)
-        self.__logger.info(f'''pin created:
-                                            board_id: {board_id},
-                                            title: {title},
-                                            price: {price},
-                                            image_path: {image_path},
-                                            url: {printbar_url}''')
+        log_msg = f'''board_id: {board_id},
+                      title: {title},
+                      price: {price},
+                      image_path: {image_path},
+                      url: {printbar_url}'''
+        try:
+            self.__pinterest.upload_pin(board_id=board_id,
+                                image_file=image_path,
+                                description= f"Цена: {price}. {description} {hashtag}",
+                                link=printbar_url,
+                                title=title)
+        except requests.exceptions.HTTPError:
+            self.__logger.info(f"can't create pin:\n{log_msg}")
+            raise RuntimeError("Error: can't create pin")
+        else:
+            self.__logger.info(f"pin created:\n{log_msg}")
