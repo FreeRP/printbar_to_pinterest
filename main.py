@@ -15,9 +15,9 @@ def main():
     pin_uploader.login()
 
     printbar_parser = PrintbarParser(logger)
-    for pinterest_board_name, printbar_url in board_and_url.items():
+    for pinterest_board_name, prinbar_data in board_and_url.items():
         board_id = pin_uploader.get_board_id(pinterest_board_name)
-        products_data = printbar_parser.get_products_data(printbar_url['url'])
+        products_data = printbar_parser.get_products_data(prinbar_data['url'])
         for name, price, image_path, printbar_url in products_data:
             try:
                 pin_uploader.create_pin(board_id, name, price, image_path, printbar_url)
