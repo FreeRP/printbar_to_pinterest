@@ -26,8 +26,14 @@ class PinUploader:
             response = self.__pinterest.create_board(name=boardname)
         except requests.exceptions.HTTPError as err:
             self.__logger.exception(err)
-        self.__logger.exception('board created')
-        return response.json()['resource_response']['data']['id']
+            return None
+
+        if response is not None:
+            self.__logger.exception('board {} created')
+            return response.json()['resource_response']['data']['id']
+        else:
+            self.__logger.exception("can't create board '{boardname}'")
+            return None
 
     def create_pin(self, board_id, title, price, image_path, printbar_url):
         description = '''Принт выдерживает неограниченное количество стирок.
