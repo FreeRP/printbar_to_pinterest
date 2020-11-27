@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 
 class PrintbarParser:
 
-    def __init__(self, logger):
+    def __init__(self, logger, alias):
         self.__product_data = dict()
         self.__product_cntr = 0
+        self.__alias = alias
         self.__logger = logger
 
     def get_html(self, url):
@@ -96,4 +97,5 @@ class PrintbarParser:
             price = self.__get_price(html_soup)
             image_path = self.__get_image_path(title, html_soup)
             self.__logger.info(f'from {url} recived {product_url}, {price}, {image_path}')
+            product_url = product_url.replace('printbar.ru', self.__alias)
             yield (title, price, image_path, product_url)
