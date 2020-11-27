@@ -16,11 +16,11 @@ class PinUploader:
                                      cred_root=self.__cfg['cred_root'],
                                      user_agent=self.__cfg['user_agent'])
         self.__pinterest.login()
-        self.__logger.info(f'login')
+        self.__logger.info(f"{self.__cfg['username']} login")
 
     def logout(self):
         self.__pinterest.logout()
-        self.__logger.info('logout')
+        self.__logger.info(f"{self.__cfg['username']} logout")
 
     def get_board_id(self, boardname):
         response = None
@@ -31,7 +31,6 @@ class PinUploader:
             return None
 
         if response is not None:
-            print('response status: ',response.ok)
             self.__logger.info("board {boardname} created")
             return response.json()['resource_response']['data']['id']
         else:
@@ -55,7 +54,7 @@ class PinUploader:
                                 link=printbar_url,
                                 title=title)
         except requests.exceptions.HTTPError:
-            self.__logger.info(f"can't create pin:\n{log_msg}")
+            self.__logger.info("can't create pin:\n" + log_msg)
             raise RuntimeError("Error: can't create pin")
         else:
-            self.__logger.info(f"pin created:\n{log_msg}")
+            self.__logger.info("pin created:\n" + log_msg)
