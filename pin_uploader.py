@@ -45,4 +45,9 @@ class PinUploader:
                             description= f"Цена: {price}. {description} {hashtag}",
                             title=title,
                             link=printbar_url)
-        self.__logger.info('pin created')
+        self.__logger.info(f'''pin created:
+                                            board_id: {board_id},
+                                            title: {title},
+                                            price: {price},
+                                            image_path: {image_path},
+                                            url: {printbar_url}''')
