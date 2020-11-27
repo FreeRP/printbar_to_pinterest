@@ -69,7 +69,7 @@ class PrintbarParser:
         if response.ok:
             with open(file_path, 'wb') as file:
                 file.write(response.content)
-                self.__logger.exception(f'{file_path} downloaded')
+                self.__logger.info(f'{file_path} downloaded')
 
     @staticmethod
     def __get_price(html_soup):
