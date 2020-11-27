@@ -13,7 +13,8 @@ class PinUploader:
         self.__pinterest = Pinterest(email=self.__cfg['email'],
                                      password=self.__cfg['password'],
                                      username=self.__cfg['username'],
-                                     cred_root=self.__cfg['cred_root'])
+                                     cred_root=self.__cfg['cred_root'],
+                                     user_agent=self.__cfg['user_agent'])
         self.__logger.info('login')
 
     def logout(self):
