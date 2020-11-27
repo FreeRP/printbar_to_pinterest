@@ -1,6 +1,7 @@
 {
-    "board_name":
+    "alias":"bestmerch.myprintbar.ru",
+    "igru":
     {
-        "url":"printbar.ru/"
+        "url":"https://printbar.ru/muzhskiye-tovari/igry/"
     }
 }
