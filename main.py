@@ -9,7 +9,7 @@ from utils import load_json, get_logger
 def main():
     logger = get_logger('file.log', 'p2p')
 
-    account_data = load_json('config/login.json')
+    account_data = load_json('config/account.json')
     board_and_url = load_json('config/board_data.json')
     settings = load_json('config/settings.json')
 
