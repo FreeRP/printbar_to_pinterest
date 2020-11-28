@@ -8,6 +8,7 @@ class PinUploader:
         self.__cfg = cfg
         self.__pinterest = None
         self.__logger = logger
+        self.__boards = None
 
     def login(self):
         self.__pinterest = Pinterest(email=self.__cfg['email'],
