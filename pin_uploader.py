@@ -9,13 +9,18 @@ class PinUploader:
         self.__pinterest = None
         self.__logger = logger
         self.__boards = None
+        self.__create_obj()
 
-    def login(self):
+    def __create_obj(self):
         self.__pinterest = Pinterest(email=self.__cfg['email'],
                                      password=self.__cfg['password'],
                                      username=self.__cfg['username'],
                                      cred_root=self.__cfg['cred_root'],
                                      user_agent=self.__cfg['user_agent'])
+        self.__pinterest.login()
+        self.__boards = self.__pinterest.boards()
+
+    def login(self):
         self.__pinterest.login()
         self.__logger.info(f"{self.__cfg['username']} login")
 
