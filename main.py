@@ -26,10 +26,10 @@ def main():
             except requests.exceptions.HTTPError as err:
                 logger.exception(err)
                 pin_uploader.logout()
-                raise RuntimeError('Error')
+                raise
             except Exception as err:
                 logger.exception(f'unknow exception: {err}')
-                raise RuntimeError('Error')
+
             sleep(settings['pin_creating_period'])
         sleep(settings['board_creating_period'])
 
