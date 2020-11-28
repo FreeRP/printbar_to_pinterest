@@ -14,7 +14,6 @@ def main():
     settings = load_json('config/settings.json')
 
     pin_uploader = PinUploader(account_data, logger)
-    pin_uploader.login()
     printbar_parser = PrintbarParser(logger, settings['alias'])
 
     for pinterest_board_name, printbar_catalog_url in board_and_url.items():
