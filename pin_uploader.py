@@ -25,17 +25,22 @@ class PinUploader:
         self.__pinterest.logout()
         self.__logger.info(f"{self.__cfg['username']} logout")
 
+    def __find_board_id(self, boardname):
+        for board in self.__boards:
+            if boardname == board['name']:
+                return board['id']
+
     def get_board_id(self, boardname):
         response = None
-        try:
-            response = self.__pinterest.create_board(name=boardname)
-        except requests.exceptions.HTTPError as err:
-            self.__logger.exception(err)
-            return None
-
+        board_id = self.__find_board_id(boardname)
+        if board_id:
+            return board_id
+        response = self.__pinterest.create_board(name=boardname)
         if response is not None:
+            board_id = response.json()['resource_response']['data']['id']
             self.__logger.info("board {boardname} created")
-            return response.json()['resource_response']['data']['id']
+            self.__boards.append({'name': boardname, 'id': board_id})
+            return board_id
         else:
             self.__logger.exception("can't create board '{boardname}'")
             return None
