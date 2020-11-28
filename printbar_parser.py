@@ -59,18 +59,19 @@ class PrintbarParser:
             return html_soup.find('div', class_='pb__info--container-box pb__info--information')
         except AttributeError as err:
             self.__logger.exception(err)
+            return ''
 
     def __get_title(self, html_soup):
         return self.__get_img_attribute(html_soup, 'alt').\
                     replace('/','').replace('\\','').\
                     replace('?','').replace('*','')
 
-    def __download_image(self, url, file_path):
+    def __download_image(self, url, saved_img_path):
         response = requests.get(url, stream=True)
         if response.ok:
-            with open(file_path, 'wb') as file:
+            with open(saved_img_path, 'wb') as file:
                 file.write(response.content)
-                self.__logger.info(f'{file_path} downloaded')
+                self.__logger.info(f'{saved_img_path} downloaded')
 
     @staticmethod
     def __get_price(html_soup):
