@@ -18,11 +18,8 @@ class PinUploader:
                                      cred_root=self.__cfg['cred_root'],
                                      user_agent=self.__cfg['user_agent'])
         self.__pinterest.login()
-        self.__boards = self.__pinterest.boards()
-
-    def login(self):
-        self.__pinterest.login()
         self.__logger.info(f"{self.__cfg['username']} login")
+        self.__boards = self.__pinterest.boards()
 
     def logout(self):
         self.__pinterest.logout()
