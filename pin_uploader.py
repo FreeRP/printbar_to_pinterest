@@ -42,7 +42,7 @@ class PinUploader:
             self.__boards.append({'name': boardname, 'id': board_id})
             return board_id
         else:
-            self.__logger.exception("can't create board '{boardname}'")
+            self.__logger.error("can't create board '{boardname}'")
             return None
 
     def create_pin(self, board_id, title, price, image_path, printbar_url):
@@ -50,11 +50,6 @@ class PinUploader:
                          Выберите тип ткани и вид печати.
                          Продукция будет готова через 48 часов.'''
         hashtag = title.replace(' ', ' #')
-        log_msg = f'''board_id: {board_id},
-                      title: {title},
-                      price: {price},
-                      image_path: {image_path},
-                      url: {printbar_url}'''
         try:
             self.__pinterest.upload_pin(board_id=board_id,
                                 image_file=image_path,
@@ -62,7 +57,8 @@ class PinUploader:
                                 link=printbar_url,
                                 title=title)
         except requests.exceptions.HTTPError:
-            self.__logger.info("can't create pin:\n" + log_msg)
+            self.__logger.info('')
+            self.__logger.error(f"can't create pin")
             raise RuntimeError("Error: can't create pin")
         else:
             self.__logger.info("pin created:\n" + log_msg)
