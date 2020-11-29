@@ -1,5 +1,7 @@
+import shutil
 from time import sleep
 import requests
+import atexit as _atexit
 
 from pin_uploader import PinUploader
 from printbar_parser import PrintbarParser
@@ -36,4 +38,5 @@ def parse_printbar_and_upload_to_pinterest():
         sleep(settings['board_creating_period'])
 
 if __name__ == "__main__":
+    _atexit.register(shutil.rmtree(SAVED_IMAGES_DIR, ignore_errors=True))
     parse_printbar_and_upload_to_pinterest()
