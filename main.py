@@ -6,7 +6,7 @@ from printbar_parser import PrintbarParser
 from utils import load_json, get_logger
 
 
-def main():
+def parse_printbar_and_upload_to_pinterest():
     logger = get_logger('file.log', 'p2p')
 
     account_data = load_json('config/account.json')
@@ -34,4 +34,4 @@ def main():
         sleep(settings['board_creating_period'])
 
 if __name__ == "__main__":
-    main()
+    parse_printbar_and_upload_to_pinterest()
