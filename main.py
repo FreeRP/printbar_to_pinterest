@@ -35,6 +35,10 @@ def parse_printbar_and_upload_to_pinterest(logger):
 def remove_imgs_dir():
     shutil.rmtree(SAVED_IMAGES_DIR, ignore_errors=True)
 
+def create_imgs_dir():
+    if os.path.isdir(SAVED_IMAGES_DIR):
+        os.mkdir(SAVED_IMAGES_DIR)
+
 if __name__ == "__main__":
     _atexit.register(remove_imgs_dir)
     logger = get_logger('file.log', 'p2p')
