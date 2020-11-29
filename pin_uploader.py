@@ -58,7 +58,7 @@ class PinUploader:
                                 title=title)
         except requests.exceptions.HTTPError:
             self.__logger.info('')
-            self.__logger.error(f"can't create pin")
-            raise RuntimeError("Error: can't create pin")
+            self.__logger.error("can't create pin")
+            raise
         else:
-            self.__logger.info("pin created:\n" + log_msg)
+            self.__logger.info("pin created:\n")
