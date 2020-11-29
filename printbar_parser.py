@@ -63,9 +63,10 @@ class PrintbarParser:
             return ''
 
     def __get_title(self, html_soup):
-        return self.__get_img_attribute(html_soup, 'alt').\
-                    replace('/','').replace('\\','').\
-                    replace('?','').replace('*','')
+        title = self.__get_img_attribute(html_soup, 'alt')
+        for sym in ('/', '\\', '?', '*'):
+            title = title.replace(symb, '')
+        return title
 
     def __download_image(self, url, saved_img_path):
         response = requests.get(url, stream=True)
