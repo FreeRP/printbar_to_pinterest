@@ -1,3 +1,4 @@
+import os
 import shutil
 from time import sleep
 import atexit as _atexit
@@ -41,7 +42,9 @@ def create_imgs_dir():
 
 if __name__ == "__main__":
     _atexit.register(remove_imgs_dir)
+    create_imgs_dir()
     logger = get_logger('file.log', 'p2p')
+
     try:
         parse_printbar_and_upload_to_pinterest(logger)
     except Exception as err:
