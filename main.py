@@ -6,6 +6,8 @@ from printbar_parser import PrintbarParser
 from utils import load_json, get_logger
 
 
+SAVED_IMAGES_DIR = '.imgs/'
+
 def parse_printbar_and_upload_to_pinterest():
     logger = get_logger('file.log', 'p2p')
 
@@ -13,8 +15,8 @@ def parse_printbar_and_upload_to_pinterest():
     board_and_url = load_json('config/board_data.json')
     settings = load_json('config/settings.json')
 
+    printbar_parser = PrintbarParser(logger, settings['alias'], SAVED_IMAGES_DIR)
     pin_uploader = PinUploader(account_data, logger)
-    printbar_parser = PrintbarParser(logger, settings['alias'])
 
     for pinterest_board_name, printbar_catalog_url in board_and_url.items():
         board_id = pin_uploader.get_board_id(pinterest_board_name)
