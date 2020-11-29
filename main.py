@@ -8,11 +8,9 @@ from printbar_parser import PrintbarParser
 from utils import load_json, get_logger
 
 
-SAVED_IMAGES_DIR = '.imgs/'
+SAVED_IMAGES_DIR = 'imgs'
 
-def parse_printbar_and_upload_to_pinterest():
-    logger = get_logger('file.log', 'p2p')
-
+def parse_printbar_and_upload_to_pinterest(logger):
     account_data = load_json('config/account.json')
     board_and_url = load_json('config/board_data.json')
     settings = load_json('config/settings.json')
@@ -31,9 +29,6 @@ def parse_printbar_and_upload_to_pinterest():
                 logger.exception(err)
                 pin_uploader.logout()
                 raise
-            except Exception as err:
-                logger.exception(f'unknow exception: {err}')
-
             sleep(settings['pin_creating_period'])
         sleep(settings['board_creating_period'])
 
@@ -42,4 +37,8 @@ def remove_imgs_dir():
 
 if __name__ == "__main__":
     _atexit.register(remove_imgs_dir)
-    parse_printbar_and_upload_to_pinterest()
+    logger = get_logger('file.log', 'p2p')
+    try:
+        parse_printbar_and_upload_to_pinterest(logger)
+    except Exception as err:
+        logger.exception(f'unknow exception: {err}')
