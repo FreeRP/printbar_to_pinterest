@@ -78,9 +78,9 @@ class PrintbarParser:
     @staticmethod
     def __get_price(html_bs4: BeautifulSoup)->str:
         price = html_bs4.find('span', class_='js-end-price').text
-        for key, val in {' ':'', '₽':' ₽', 'ру': ' ₽'}:
+        for key, val in {' ':'', '₽':' ₽', 'ру': ' ₽'}.items():
             price = price.replace(key, val)
-        return price[:price_text.find('или')]
+        return price[:price.find('или')]
 
     def __get_image_path(self, image_name:str, html_bs4: BeautifulSoup)->str:
         url = self.__get_img_attribute(html_bs4, 'data-full')
