@@ -4,11 +4,12 @@ from bs4 import BeautifulSoup
 
 class PrintbarParser:
 
-    def __init__(self, logger, alias):
+    def __init__(self, logger, alias, imgs_dir):
         self.__product_data = dict()
         self.__product_counter = 0
         self.__alias = alias
         self.__logger = logger
+        self.__imgs_dir = imgs_dir
 
     def get_html(self, url):
         user_agent = {'User-Agent':
@@ -81,7 +82,7 @@ class PrintbarParser:
 
     def __get_image_path(self, image_name, html_soup):
         url = self.__get_img_attribute(html_soup, 'data-full')
-        file_path = f"imgs/{image_name.replace(' ','')}{self.__product_counter}.jpg"
+        file_path = f"{self.__imgs_dir}/{image_name.replace(' ','')}{self.__product_counter}.jpg"
         self.__product_counter += 1
         self.__download_image(url, file_path)
         return file_path
