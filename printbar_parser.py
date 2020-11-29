@@ -37,16 +37,16 @@ class PrintbarParser:
         return [link.get('href') for link in links]
 
     @staticmethod
-    def __get_img_attribute(html_soup, attribute):
-        img_url = ''
+    def __get_img_attribute(html_soup, name):
+        attribute = ''
         for tag in ('pb__product--mini-photo--list', 'tns6'):
             try:
-                img_url = html_soup.find('div', tag).find('img').get(attribute)
+                attribute = html_soup.find('div', tag).find('img').get(name)
             except AttributeError:
                 continue
             else:
                 break
-        return img_url
+        return attribute
 
     def __get_useful_data(self, html_soup):
         try:
