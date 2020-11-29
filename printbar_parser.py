@@ -6,7 +6,7 @@ class PrintbarParser:
 
     def __init__(self, logger, alias):
         self.__product_data = dict()
-        self.__product_cntr = 0
+        self.__product_counter = 0
         self.__alias = alias
         self.__logger = logger
 
@@ -81,8 +81,8 @@ class PrintbarParser:
 
     def __get_image_path(self, image_name, html_soup):
         url = self.__get_img_attribute(html_soup, 'data-full')
-        file_path = f"imgs/{image_name.replace(' ','')}{self.__product_cntr}.jpg"
-        self.__product_cntr += 1
+        file_path = f"imgs/{image_name.replace(' ','')}{self.__product_counter}.jpg"
+        self.__product_counter += 1
         self.__download_image(url, file_path)
         return file_path
 
