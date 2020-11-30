@@ -57,7 +57,7 @@ product url 'https://printbar.ru/muzhskiye-futbolki/futbolki-vlad-a4-2818453/' -
 ```
 # requirements
 ```
-pip3 install py3-pinterest beautifulsoup4 requests
+pip3 install py3-pinterest beautifulsoup4 requests lxml
 ```
 or use .venv
 # how to run
