@@ -1,7 +1,7 @@
 # printbar_to_pinterest
 Extracts products from printbar.ru and upload to pinterest.com.
 # how it works
-Products name, price, images and url extract from printbar.ru and immediately uploaded to pinterest.ru
+Products name, price, image and url extract from printbar.ru and immediately uploaded to pinterest.ru
 Data transfer principle table:
 | printbar product page| pinterest pin |
 | ------------- |:-------------:| 
