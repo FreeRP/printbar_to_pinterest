@@ -6,7 +6,7 @@ import requests
 
 from pin_uploader import PinUploader
 from printbar_parser import PrintbarParser
-from utils import load_json, get_logger
+from tools.utils import load_json, get_logger
 
 
 SAVED_IMAGES_DIR = 'imgs'
@@ -37,7 +37,7 @@ def remove_imgs_dir():
     shutil.rmtree(SAVED_IMAGES_DIR, ignore_errors=True)
 
 def create_imgs_dir():
-    if os.path.isdir(SAVED_IMAGES_DIR):
+    if not os.path.isdir(SAVED_IMAGES_DIR):
         os.mkdir(SAVED_IMAGES_DIR)
 
 if __name__ == "__main__":
