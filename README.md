@@ -19,7 +19,8 @@ Example:
 | https://printbar.ru/muzhskiye-futbolki/futbolka-dab-panda-ded-moroz-1866669/ | https://{alias}/muzhskiye-futbolki/futbolka-dab-panda-ded-moroz-1866669/|
 
 Hashtags generated automatically and consists from product name, where spaces replaced by #. 
-For example: product name 'Мужская футболка Boom' will change to '#мужская #футболка #boom'.
+
+For example: product name 'Мужская футболка Boom' will change to '#Мужская #футболка #Boom'.
 {alias} is a your shop url. See below.
 # configuration
 ## config/account.json
