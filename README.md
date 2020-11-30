@@ -52,7 +52,9 @@ If pinterest board doesn't exist, it will be created.
 ```
 'alias' is replacing on 'printbar.ru' in product url. 
 Example:
+```
 product url 'https://printbar.ru/muzhskiye-futbolki/futbolki-vlad-a4-2818453/' -> pin url 'https://bestmerch.printbar.ru/muzhskiye-futbolki/futbolki-vlad-a4-2818453/'
+```
 # requirements
 ```
 pip3 install py3-pinterest beautifulsoup4 requests
