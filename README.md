@@ -1,7 +1,7 @@
 # printbar_to_pinterest
 Extracts products from printbar.ru and upload to pinterest.com.
 # how it works
-Products name, price, images and url extract from printbar.ru and immediately uploaded to pinterest.ru
+Products name, price, image and url extract from printbar.ru and immediately uploaded to pinterest.ru
 Data transfer principle table:
 | printbar product page| pinterest pin |
 | ------------- |:-------------:| 
@@ -57,7 +57,7 @@ product url 'https://printbar.ru/muzhskiye-futbolki/futbolki-vlad-a4-2818453/' -
 ```
 # requirements
 ```
-pip3 install py3-pinterest beautifulsoup4 requests
+pip3 install py3-pinterest beautifulsoup4 requests lxml
 ```
 or use .venv
 # how to run
