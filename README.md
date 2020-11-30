@@ -50,7 +50,9 @@ If pinterest board doesn't exist, it will be created.
     "board_creating_period": 500
 }
 ```
-'alias' is replacing on 'printbar.ru' in product url. 
+ pin_creating_period and board_creating_period measured in seconds
+
+'alias' is replacing on 'printbar.ru' in product url. alias = 'bestmerch.printbar.ru'
 Example:
 ```
 product url 'https://printbar.ru/muzhskiye-futbolki/futbolki-vlad-a4-2818453/' -> pin url 'https://bestmerch.printbar.ru/muzhskiye-futbolki/futbolki-vlad-a4-2818453/'
