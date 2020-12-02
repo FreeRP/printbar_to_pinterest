@@ -57,8 +57,7 @@ class PinUploader:
                                 link=printbar_url,
                                 title=title)
         except requests.exceptions.HTTPError:
-            self.__logger.info('')
-            self.__logger.error("can't create pin")
+            self.__logger.error("can't create '{title}' pin")
             raise
         else:
-            self.__logger.info("pin created:\n")
+            self.__logger.info("'{title}' pin created ")
